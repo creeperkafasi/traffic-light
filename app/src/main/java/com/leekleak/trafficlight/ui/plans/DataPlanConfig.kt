@@ -1300,6 +1300,7 @@ private fun AddExtraDialog(
     val metric = LocalSizeMetric.current
     val amountState = rememberTextFieldState("1")
     val usageState = rememberTextFieldState("0")
+    val priorityState = rememberTextFieldState("0")
     var amountUnit by remember { mutableStateOf(DataSizeUnit.GB) }
     var usageUnit by remember { mutableStateOf(DataSizeUnit.GB) }
     var startDate by remember { mutableLongStateOf(LocalDate.now().toTimestamp()) }
@@ -1395,6 +1396,20 @@ private fun AddExtraDialog(
                     }
                 }
 
+                Text(stringResource(R.string.priority), style = typography.titleMedium, color = colorScheme.tertiary)
+                BasicTextField(
+                    state = priorityState,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .card()
+                        .background(colorScheme.surfaceContainer)
+                        .padding(8.dp),
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                    textStyle = typography.bodyLarge.copy(color = colorScheme.onSurface),
+                    cursorBrush = SolidColor(colorScheme.onSurface),
+                    lineLimits = TextFieldLineLimits.SingleLine
+                )
+
                 Text(stringResource(R.string.start), style = typography.titleMedium, color = colorScheme.tertiary)
                 Box(
                     Modifier
@@ -1455,6 +1470,7 @@ private fun AddExtraDialog(
                 Button(onClick = {
                     val amountValue = amountState.text.toString().toDoubleOrNull() ?: 1.0
                     val usageValue = usageState.text.toString().toDoubleOrNull() ?: 0.0
+                    val priorityValue = (priorityState.text.toString().toIntOrNull() ?: 0).coerceAtLeast(0)
                     val base = if (metric) 1000.0 else 1024.0
                     val amountBytes = (amountValue * amountUnit.toBits(base)).toLong()
                     val usageBytes = (usageValue * usageUnit.toBits(base)).toLong()
@@ -1463,6 +1479,7 @@ private fun AddExtraDialog(
                             dataAmount = DataSize(amountBytes),
                             unit = amountUnit,
                             dataUsed = usageBytes,
+                            priority = priorityValue,
                             startStamp = startDate,
                             expiryStamp = expiryDate,
                             expired = false

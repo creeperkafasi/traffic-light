@@ -225,7 +225,10 @@ data class DataPlan(
                 val activeIndices = updatedExtras.indices.filter { idx ->
                     val extra = updatedExtras[idx]
                     !extra.expired && extra.startStamp <= start && extra.expiryStamp >= end
-                }.sortedBy { updatedExtras[it].expiryStamp }
+                }.sortedWith(
+                    compareByDescending<Int> { updatedExtras[it].priority }
+                        .thenBy { updatedExtras[it].expiryStamp }
+                )
 
                 for (idx in activeIndices) {
                     val extra = updatedExtras[idx]

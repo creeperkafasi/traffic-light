@@ -26,6 +26,7 @@ data class DataPlanExtra(
     val dataAmount: DataSize,
     val unit: DataSizeUnit = DataSizeUnit.GB,
     val dataUsed: Long = 0,
+    val priority: Int = 0,
     val startStamp: Long,
     val expiryStamp: Long,
     val id: String = UUID.randomUUID().toString(),
