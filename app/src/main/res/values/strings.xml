@@ -154,6 +154,7 @@
     <string name="recursion">Recursion</string>
     <string name="recursion_description">Add unused data to an extra at the end of the period.</string>
     <string name="amount">Amount</string>
+    <string name="priority">Priority</string>
     <string name="expiry">Expiry</string>
     <string name="start">Start</string>
     <string name="doesn_t_work">Doesn\'t work?</string>
